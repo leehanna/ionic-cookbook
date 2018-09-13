@@ -1,19 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
-import { HomePage } from '../home/home';
+import { ShoppingListPage } from '../shopping-list/shopping-list';
+import { RecipesPage } from '../recipes/recipes';
+import { ToastController, PopoverController } from 'ionic-angular';
 
 @Component({
   templateUrl: 'tabs.html'
 })
-export class TabsPage {
+export class TabsPage implements OnInit {
 
-  tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+  tab1Root = ShoppingListPage;
+  tab2Root = RecipesPage;
 
-  constructor() {
+  constructor(private toastCtrl: ToastController) {
 
+  }
+
+  ngOnInit() {
+    const toast = this.toastCtrl.create({
+      message: 'Welcome user!',
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
   }
 }

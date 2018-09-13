@@ -1,0 +1,84 @@
+<!--
+  Generated template for the NewRecipePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ mode }} Recipe</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Title</ion-label>
+        <ion-input type="text" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Description</ion-label>
+        <ion-textarea type="text" formControlName="description"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Difficulty</ion-label>
+        <ion-select formControlName="difficulty">
+          <ion-option
+            *ngFor="let option of selectOptions"
+            [value]="option">{{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-list-header>Ingredients</ion-list-header>
+      <ion-row style="padding: 0; margin: 0;">
+        <ion-col col-8 style="padding-top: 0">
+          <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input type="text" formControlName="ingName"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4 style="padding-top: 0">
+          <ion-item>
+            <ion-label floating>Amount</ion-label>
+            <ion-input type="number" formControlName="ingAmount"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <button
+        ion-button type="button"
+        clear
+        block
+        icon-start
+        [disabled]="!(form.get('ingName').value && form.get('ingAmount').value)"
+        (click)="onAddIngredient()">
+        <ion-icon name="add"></ion-icon>
+        Add Ingredient
+      </button>
+      <ion-item-sliding *ngFor="let ingGroup of form.get('ingredients').controls; let i = index">
+        <ion-item>
+          <p>{{ ingGroup.get('name').value }} ({{ ingGroup.get('amount').value }})</p>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button color="danger" (click)="onRemoveIngredient(i)">
+            <ion-icon name="trash"></ion-icon>
+            Remove
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+
+
+    <button
+      ion-button
+      type="submit"
+      [disabled]="!form.valid"
+      block
+      style="margin-top: 20px">{{ mode }} Recipe</button>
+  </form>
+</ion-content>
